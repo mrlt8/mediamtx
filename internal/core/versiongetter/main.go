@@ -3,6 +3,7 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"os"
@@ -19,7 +20,17 @@ const version = "{{ .Version }}"
 func do() error {
 	log.Println("getting version...")
 
+	temp, _ := exec.Command("git", "status").CombinedOutput()
+	/*if err != nil {
+		return err
+	}*/
+
+	fmt.Println(string(temp))
+
 	stdout, err := exec.Command("git", "describe", "--tags").Output()
+
+	fmt.Println(string(stdout))
+
 	if err != nil {
 		return err
 	}
